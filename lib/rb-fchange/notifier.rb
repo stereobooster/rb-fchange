@@ -40,9 +40,6 @@ module FChange
 
       @dwChangeHandles.push watcher.id
 
-      # Create storage for event handles (LONG)
-      @lp_dwChangeHandles = " " * 4 * dwChangeHandles.count 
-
       # Pack event handles into newly created storage area 
       # to be used for Win32 call
       @lp_dwChangeHandles = dwChangeHandles.pack("L" * dwChangeHandles.count)
@@ -72,6 +69,8 @@ module FChange
     #   or the flags don't contain any events
     def watch(path, *flags, &callback)
       recursive = flags.include?(:recursive)
+      flags.include?(:recursive)
+      #:latency = 0.5
       flags = flags - [:recursive]
       @flags = flags.freeze
       Watcher.new(self, path, recursive, *flags, &callback)      
@@ -110,11 +109,13 @@ module FChange
     # @private
     def read_events
 
+      # can return WAIT_TIMEOUT  = 0x00000102
       dwWaitStatus = Native.k32WaitForMultipleObjects(@dwChangeHandles.count, 
-        @lp_dwChangeHandles, 0, Native::INFINITE)
+        @lp_dwChangeHandles, 0, 500)
 
       events = []
-      
+
+      # this call blocks all threads completely.
       @dwChangeHandles.each_index do |index|
         if dwWaitStatus == Native::WAIT_OBJECT_0 + index
 
