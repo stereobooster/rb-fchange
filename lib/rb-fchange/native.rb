@@ -1,4 +1,4 @@
-require 'Win32API'
+require 'win32/api'
 
 module FChange
   # This module contains the low-level foreign-function.
@@ -18,8 +18,8 @@ module FChange
     #  BOOL bWatchSubtree,    // monitoring option
     #  DWORD dwNotifyFilter   // filter conditions
     #);
-    @_k32FindFirstChangeNotification = Win32API.new("kernel32",
-    "FindFirstChangeNotification", ['P', 'I', 'L'], 'L')
+    @_k32FindFirstChangeNotification = 
+      Win32::API.new('FindFirstChangeNotification', ['P', 'I', 'L'], 'L')
 
     # @return handle
     def k32FindFirstChangeNotification(path, recursive, flag)
@@ -31,8 +31,8 @@ module FChange
     # BOOL FindNextChangeNotification(
     #  HANDLE hChangeHandle   // handle to change notification
     # );
-    @_k32FindNextChangeNotification = Win32API.new("kernel32",
-    "FindNextChangeNotification", ['L'], 'I')
+    @_k32FindNextChangeNotification = 
+      Win32::API.new('FindNextChangeNotification', ['L'], 'I')
     
     def k32FindNextChangeNotification(handle)
         @_k32FindNextChangeNotification.call(handle)
@@ -46,8 +46,8 @@ module FChange
     #   BOOL bWaitAll,            // wait option
     #   DWORD dwMilliseconds      // time-out interval
     # );
-    @_k32WaitForMultipleObjects = Win32API.new("kernel32",
-    "WaitForMultipleObjects", ['L', 'P', 'I', 'L'], 'L')
+    @_k32WaitForMultipleObjects = 
+      Win32::API.new('WaitForMultipleObjects', ['L', 'P', 'I', 'L'], 'L')
     
     def k32WaitForMultipleObjects(count, handles, wait_all, time)
         @_k32WaitForMultipleObjects.call(count, handles, wait_all, time)
@@ -58,8 +58,8 @@ module FChange
     # BOOL FindCloseChangeNotification(
     #   HANDLE hChangeHandle
     # );
-    @_k32FindCloseChangeNotification = Win32API.new("kernel32",
-    "FindCloseChangeNotification", ['L'], 'I')
+    @_k32FindCloseChangeNotification = 
+      Win32::API.new('FindCloseChangeNotification', ['L'], 'I')
 
     def k32FindCloseChangeNotification(handle)
         @_k32FindCloseChangeNotification.call(handle)
