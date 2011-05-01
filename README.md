@@ -21,3 +21,11 @@ Example
   
   notifier.run
 ```
+
+## TODO
+
+ - add latency setting with 0.5 default
+ - default flag for events :all_events
+ - rework interface (should more look like rb-fsevent)
+ - add specs (can use specs from rb-fsevent)
+ - publish on rubygems
