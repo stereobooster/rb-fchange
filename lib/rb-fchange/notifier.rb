@@ -15,6 +15,13 @@ module FChange
   #   # Nothing happens until you run the notifier!
   #   notifier.run
   class Notifier
+
+    #
+    INFINITE = 0xFFFFFFFF
+
+    #
+    WAIT_OBJECT_0 = 0x00000000
+
     # A hash from {Watcher} ids to the instances themselves.
     #
     # @private
@@ -110,19 +117,19 @@ module FChange
     def read_events
 
       # can return WAIT_TIMEOUT  = 0x00000102
-      dwWaitStatus = Native.k32WaitForMultipleObjects(@dwChangeHandles.count, 
+      dwWaitStatus = Native.WaitForMultipleObjects(@dwChangeHandles.count, 
         @lp_dwChangeHandles, 0, 500)
 
       events = []
 
       # this call blocks all threads completely.
       @dwChangeHandles.each_index do |index|
-        if dwWaitStatus == Native::WAIT_OBJECT_0 + index
+        if dwWaitStatus == WAIT_OBJECT_0 + index
 
           ev = Event.new(@watchers[@dwChangeHandles[index]])
           events << ev
         
-          r = Native.k32FindNextChangeNotification(@dwChangeHandles[index]) 
+          r = Native.FindNextChangeNotification(@dwChangeHandles[index]) 
           if r == 0 
               raise SystemCallError.new("Failed to watch", r) 
           end

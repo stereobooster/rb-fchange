@@ -1,3 +1,5 @@
+require 'pathname'
+
 module FChange
   # Watchers monitor a single path for changes,
   # specified by {FChange::Notifier#watch event flags}.
@@ -50,10 +52,24 @@ module FChange
     #
     # @raise [SystemCallError] if the watch fails to be disabled for some reason
     def close
-      r = Native.k32FindCloseChangeNotification(@id)
+      r = Native.FindCloseChangeNotification(@id)
       #@notifier.remove_watcher(self)
       return if r == 0
       raise SystemCallError.new("Failed to stop watching #{@path.inspect}", r)
+    end
+
+    # see http://msdn.microsoft.com/en-us/library/aa365247(v=vs.85).aspx
+    def normalize_path(path)
+      if(path.size > 256)
+        path = "\\\\?\\" + Pathname.new(path).realpath.to_s
+      end
+#      require 'rchardet'
+#      require 'iconv'
+#      cd = CharDet.detect(path)
+#      encoding = cd['encoding']
+#      converter = Iconv.new("UTF-16LE", encoding)
+#      converter.iconv(path)
+      # path.encode!("UTF-16LE")
     end
 
     # Creates a new {Watcher}.
@@ -65,9 +81,12 @@ module FChange
       @callback = callback || proc {}
       @path = path
       @flags = flags
-      @recursive = recursive
-      @id = Native.k32FindFirstChangeNotification(path, recursive,
+      @recursive = recursive ? 1 : 0
+
+      @id = Native.FindFirstChangeNotificationA(path, @recursive,
         Native::Flags.to_mask(flags));
+#      @id = Native.FindFirstChangeNotificationW(normalize_path(path), @recursive,
+#        Native::Flags.to_mask(flags));
  
       unless @id < 0
         @notifier.add_watcher(self)
