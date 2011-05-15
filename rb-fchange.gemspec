@@ -6,10 +6,10 @@ Gem::Specification.new do |s|
   s.name        = %q{rb-fchange}
   s.version     = FChange::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors 	= ["stereobooster"]
-  s.date = %q{2011-04-28}
+  s.authors     = ["stereobooster"]
+  s.date = %q{2011-05-15}
   s.description = %q{A Ruby wrapper for Windows Kernel functions for monitoring the specified directory or subtree}
-  s.email = %q{stereobooster@gmail.com}
+  s.email = ["stereobooster@gmail.com"]
   s.extra_rdoc_files = [
     "README.md"
   ]
