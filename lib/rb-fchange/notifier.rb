@@ -76,11 +76,14 @@ module FChange
     #   or the flags don't contain any events
     def watch(path, *flags, &callback)
       recursive = flags.include?(:recursive)
-      flags.include?(:recursive)
       #:latency = 0.5
       flags = flags - [:recursive]
-      @flags = flags.freeze
-      Watcher.new(self, path, recursive, *flags, &callback)      
+      if flags.empty?
+        @flags = [:all_events]
+      else
+        @flags = flags.freeze
+      end
+      Watcher.new(self, path, recursive, *@flags, &callback)
     end
 
     # Starts the notifier watching for filesystem events.

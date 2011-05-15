@@ -2,6 +2,11 @@
 
 Code is working. But there is still a lot of work.
 This is a simple wrapper over the Windows Kernel functions for monitoring the specified directory or subtree.
+Tested on:
+
+ - jruby 1.6.1 (ruby-1.8.7-p330) (2011-04-12 85838f6)
+ - ruby 1.8.7 (2011-02-18 patchlevel 334) [i386-ingw32]
+ - ruby 1.9.2p180 (2011-02-18) [i386-mingw32]
 
 Example
 
@@ -25,8 +30,5 @@ Example
 ## TODO
 
  - add latency setting with 0.5 default
- - default flag for events :all_events
  - rework interface (should more look like rb-fsevent)
- - add specs (can use specs from rb-fsevent)
  - add none-ANSI path support
- - add jRuby support

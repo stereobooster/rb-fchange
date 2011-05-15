@@ -28,5 +28,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{A Ruby wrapper for Windows Kernel functions for monitoring the specified directory or subtree}
-  s.add_dependency('ffi')
+  s.add_dependency 'ffi'
+  s.add_development_dependency  'bundler'
+  s.add_development_dependency  'rspec'
 end
