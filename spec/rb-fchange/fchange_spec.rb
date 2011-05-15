@@ -25,7 +25,7 @@ describe FChange do
       File.delete file
     rescue
     end
-    @results.should == [@fixture_path.to_s, @fixture_path.to_s]
+    @results.include?(@fixture_path.to_s).should be_true
   end
 
   it "should catch new file" do
@@ -41,7 +41,7 @@ describe FChange do
       File.delete file
     rescue
     end
-    @results.should == [@fixture_path.to_s]
+    @results.include?(@fixture_path.to_s).should be_true
   end
 
   it "should catch file update" do
@@ -50,7 +50,7 @@ describe FChange do
     run
     FileUtils.touch file
     stop
-    @results.should == [@fixture_path.to_s]
+    @results.include?(@fixture_path.to_s).should be_true
   end
 
   it "should catch files update" do
@@ -62,7 +62,7 @@ describe FChange do
     FileUtils.touch file1
     FileUtils.touch file2
     stop
-    @results.should == [@fixture_path.to_s, @fixture_path.to_s]
+    @results.include?(@fixture_path.to_s).should be_true
   end
 
   it "should catch new directory" do
@@ -78,7 +78,7 @@ describe FChange do
       Dir.delete dir
     rescue
     end
-    @results.should == [@fixture_path.to_s]
+    @results.include?(@fixture_path.to_s).should be_true
   end
 
   it "should catch directory rename" do
@@ -99,7 +99,7 @@ describe FChange do
       Dir.delete dir_new
     rescue
     end
-    @results.should == [@fixture_path.to_s, @fixture_path.to_s]
+    @results.include?(@fixture_path.to_s).should be_true
   end
 
   it "should catch file rename" do
@@ -111,7 +111,7 @@ describe FChange do
     File.rename(file, file_new)
     stop
     File.rename(file_new, file)
-    @results.should == [@fixture_path.to_s, @fixture_path.to_s]
+    @results.include?(@fixture_path.to_s).should be_true
   end
 
 #  it "should work with none-ANSI path" do
