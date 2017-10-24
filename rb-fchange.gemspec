@@ -5,6 +5,7 @@ require "rb-fchange/version"
 Gem::Specification.new do |s|
   s.name        = %q{rb-fchange}
   s.version     = FChange::VERSION
+  s.license     = "MIT"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["stereobooster"]
   s.date = %q{2011-05-15}
