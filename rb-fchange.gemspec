@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "rb-fchange.gemspec"
   ]
   s.homepage = %q{http://github.com/stereobooster/rb-fchange}
+  s.license = "MIT"
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{A Ruby wrapper for Windows Kernel functions for monitoring the specified directory or subtree}
